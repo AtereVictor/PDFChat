@@ -41,7 +41,15 @@ def main():
       user_question = st.text_input("Ask a question about your PDF:")
       if user_question:
         docs = knowledge_base.similarity_search(user_question)
-        st.write(docs)
+        
+      #Our LLM is OpenAI
+      llm = OpenAI()
+
+      chain = load_qa_chain(llm, chain_type="stuff")
+      respnse = chain.run(input_documents=docs, question=user_question)
+      
+      #print out response
+      st.success(respnse)
 
 if __name__ == '__main__' :
     main()
