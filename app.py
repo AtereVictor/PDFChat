@@ -37,6 +37,11 @@ def main():
       embeddings = OpenAIEmbeddings()
       knowledge_base = FAISS.from_texts(chunks, embeddings)
       
+      # show user input
+      user_question = st.text_input("Ask a question about your PDF:")
+      if user_question:
+        docs = knowledge_base.similarity_search(user_question)
+        st.write(docs)
 
 if __name__ == '__main__' :
     main()
